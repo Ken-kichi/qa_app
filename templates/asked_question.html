@@ -1,0 +1,27 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h1>Uploaded PDFs</h1>
+{% if files %}
+<form action="/ask" method="post">
+    <label for="select">選択:</label>
+
+    <select name="file_path" id="select">
+        {% for file in files %}
+        <option value="{{ file.filepath }}">{{ file.filename }}</option>
+        {% endfor %}
+    </select>
+    <br>
+    <label for="text">テキスト:</label>
+    <textarea name="question" id="text" placeholder="テキストを入力"></textarea>
+    <br>
+    <input type="submit" value="送信">
+</form>
+{% else %}
+<a href="{{ url_for('upload_file') }}">Upload PDF</a>
+{% endif %}
+
+
+<h1>{{answer}}</h1>
+
+{% endblock %}
