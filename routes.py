@@ -4,7 +4,11 @@ from werkzeug.utils import secure_filename
 from . import db
 from .models import PDFFile
 from . import create_app
+from .Langchain_utils import Langchain_utils
+import os
+from dotenv import load_dotenv
 
+load_dotenv()
 app = create_app()
 
 
@@ -14,7 +18,38 @@ def allowed_file(filename):
 
 @app.route("/")
 def index():
-    return "<p>Hello World!</p>"
+    files = PDFFile.query.all()
+    return render_template('index.html', files=files)
+
+
+@app.route("/ask", methods=["POST"])
+def ask_question():
+    question = request.form.get("question")
+    file_path = request.form.get("file_path")
+
+    # 初期設定
+    langchain_utils = Langchain_utils(
+        api_key=os.getenv("OPENAI_KEY"),
+        chunk_size=100,
+        chunk_overlap=10,
+        model="text-embedding-3-small",
+        query=question
+    )
+
+    # PDFから情報を検索
+    document = langchain_utils.get_pdf_contents(file_path)
+    contents = langchain_utils.get_contents(document)
+    retriever = langchain_utils.get_retriever(contents)
+
+    answer = langchain_utils.get_answer(
+        model_name="gpt-4o-mini",
+        retriever=retriever,
+        query=question
+    )
+
+    files = PDFFile.query.all()
+
+    return render_template('asked_question.html', answer=answer, files=files)
 
 
 @app.route('/uploaded_list')
@@ -35,7 +70,7 @@ def upload_file():
             db.session.add(pdf)
             db.session.commit()
             flash('File uploaded successfully!')
-            return redirect(url_for('index'))
+            return redirect(url_for('uploaded_list'))
         flash('Invalid file type!')
     return render_template('upload.html')
 

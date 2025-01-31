@@ -3,3 +3,8 @@ psycopg2-binary==2.9.10
 openai==1.55.3
 python-dotenv==1.0.1
 Flask-SQLAlchemy==3.0.5
+langchain-community
+langchain-openai==0.2.13
+langchain-chroma==0.2.1
+pypdf==5.2.0
+cryptography==44.0.0
