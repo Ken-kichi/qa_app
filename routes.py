@@ -81,3 +81,19 @@ def upload_file():
 @app.route('/uploads/<filename>')
 def uploaded_file(filename):
     return send_from_directory(app.config['UPLOAD_FOLDER'], filename)
+
+
+@app.route('/delete', methods=['POST'])
+def delete():
+    fileId = request.form.get("fileId")
+    file = PDFFile.query.filter_by(id=fileId).first()
+
+    if file:
+        db.session.delete(file)
+        db.session.commit()
+        os.remove(file.filepath)
+        flash('File deleted successfully!')
+    else:
+        flash('File not found!')
+
+    return redirect(url_for('uploaded_list'))
