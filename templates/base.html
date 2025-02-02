@@ -5,10 +5,12 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>PDF Search</title>
+    <!-- jQueryの読み込み -->
     <script src="{{ url_for('static', filename='js/jquery.slim.min.js') }}"></script>
     <script src="{{ url_for('static', filename='js/popper.min.js') }}"></script>
     <script src="{{ url_for('static', filename='js/bootstrap.min.js') }}"></script>
     <script src="{{ url_for('static', filename='js/jquery-3.7.1.min.js') }}"></script>
+    <!-- BootstrapのCSSの読み込み -->
     <link rel="stylesheet" href="{{ url_for('static', filename='css/bootstrap.min.css') }}">
     <style>
         /* スピナーを表示するためのスタイル */
@@ -23,6 +25,7 @@
             justify-content: center;
             align-items: center;
             z-index: 9999;
+            /* スピナーが他の要素の上に表示されるようにする */
         }
     </style>
 </head>
