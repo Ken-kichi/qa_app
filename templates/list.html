@@ -1,12 +1,39 @@
 {% extends 'base.html' %}
 
 {% block content %}
-<h1>Uploaded PDFs</h1>
-<ul>
-    {% for file in files %}
-    <li>
-        <a href="{{ url_for('uploaded_file', filename=file.filename) }}">{{ file.filename }}</a>
-    </li>
-    {% endfor %}
-</ul>
+<h1 class="text-center">Uploaded PDFs</h1>
+{% if files %}
+<table class="table">
+    <thead>
+        <tr>
+            <th>File Name</th>
+            <th></th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for file in files %}
+        <tr>
+            <td class="align-middle">
+                {{file.filename }}
+            </td>
+            <td>
+                <a href="{{ url_for('uploaded_file', filename=file.filename) }}" class="btn btn-primary"
+                    target="_blank">
+                    Open
+                </a>
+            </td>
+            <td>
+                <form action="/delete" method="POST">
+                    <input type="hidden" name="filename" value="{{ file.id }}">
+                    <button class="btn btn-danger">Delete</button>
+                </form>
+            </td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% else %}
+<a href="{{ url_for('upload_file') }}" class="btn btn-primary">Upload PDF</a>
+{% endif %}
 {% endblock %}

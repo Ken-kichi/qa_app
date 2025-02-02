@@ -7,6 +7,8 @@ from . import create_app
 from .Langchain_utils import Langchain_utils
 import os
 from dotenv import load_dotenv
+from markupsafe import Markup
+import markdown
 
 load_dotenv()
 app = create_app()
@@ -46,10 +48,11 @@ def ask_question():
         retriever=retriever,
         query=question
     )
+    answer_html = Markup(markdown.markdown(answer))
 
     files = PDFFile.query.all()
 
-    return render_template('asked_question.html', answer=answer, files=files)
+    return render_template('asked_question.html', answer=answer_html, files=files)
 
 
 @app.route('/uploaded_list')
