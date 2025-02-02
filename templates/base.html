@@ -5,7 +5,26 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>PDF Search</title>
+    <script src="{{ url_for('static', filename='js/jquery.slim.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/popper.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/bootstrap.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/jquery-3.7.1.min.js') }}"></script>
     <link rel="stylesheet" href="{{ url_for('static', filename='css/bootstrap.min.css') }}">
+    <style>
+        /* スピナーを表示するためのスタイル */
+        .spinner-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
+        }
+    </style>
 </head>
 
 <body>
@@ -19,6 +38,9 @@
                             <a class="nav-link" href="{{ url_for('index') }}">Home</a>
                         </li>
                         <li class="nav-item">
+                            <a class="nav-link" href="{{ url_for('uploaded_list') }}">Uploaded List</a>
+                        </li>
+                        <li class="nav-item">
                             <a class="nav-link" href="{{ url_for('upload_file') }}">Upload PDF</a>
                         </li>
                     </ul>
@@ -29,9 +51,6 @@
     <main class="container mt-4">
         {% block content %}{% endblock %}
     </main>
-    <script src="{{ url_for('static', filename='js/jquery.slim.min.js') }}"></script>
-    <script src="{{ url_for('static', filename='js/popper.min.js') }}"></script>
-    <script src="{{ url_for('static', filename='js/bootstrap.min.js') }}"></script>
 </body>
 
 </html>
