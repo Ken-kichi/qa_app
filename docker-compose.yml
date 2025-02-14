@@ -10,19 +10,4 @@ services:
     environment:
       - FLASK_APP=app  # Flaskアプリケーションのエントリポイント
       - FLASK_ENV=development  # 開発環境を指定
-      - DATABASE_URL=postgresql://user:password@db/pdf_db  # データベース接続URL
-
-  # データベースサービスの設定
-  db:
-      image: postgres:15  # 使用するPostgreSQLのイメージ
-      environment:
-        POSTGRES_USER: user  # PostgreSQLのユーザー名
-        POSTGRES_PASSWORD: password  # PostgreSQLのパスワード
-        POSTGRES_DB: pdf_db  # 作成するデータベース名
-        TZ: Asia/Tokyo  # タイムゾーンを東京に設定
-      volumes:
-        - postgres_data:/var/lib/postgresql/data  # データ永続化のためのボリューム設定
-
-# 永続化ボリュームの設定
-volumes:
-  postgres_data:  # PostgreSQLデータ用のボリューム
+      - DATABASE_URL=postgresql://user:GDOUzrnVRdL4jivgQrLy7chD9t9AfVmW@dpg-cumug7aj1k6c73b442gg-a.singapore-postgres.render.com/pdf_db_957f  # データベース接続URL
